@@ -1,14 +1,31 @@
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
+import models.Figure;
 import models.Figures;
 
 public class Field {
 
-    static class Cell {
+    public static class Cell {
         int x, y;
 
         public Cell(int x, int y) {
             this.x = x;
+            this.y = y;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        public void setX(int x) {
+            this.x = x;
+        }
+
+        public void setY(int y) {
             this.y = y;
         }
     }
