@@ -1,10 +1,13 @@
+package controls;
+
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import models.Types;
+import gameutils.Game;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class ControlModule {
@@ -27,7 +30,7 @@ public class ControlModule {
         if (node != null) {
             node.add(controlUnit);
         } else {
-            controlBind.put(keyCode, new ArrayList<>(Arrays.asList(new ControlUnit[]{controlUnit})));
+            controlBind.put(keyCode, new ArrayList<>(Collections.singletonList(controlUnit)));
         }
     }
 

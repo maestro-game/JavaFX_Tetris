@@ -1,8 +1,13 @@
+package gameutils;
+
+import controls.ControlModule;
+import controls.ControlScheme;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.util.Duration;
+import models.Field;
 
 import java.util.ArrayList;
 
@@ -71,9 +76,7 @@ public class Game {
 
     public Game(GameConstants consts, ControlScheme controlScheme) {
         gameArray.add(this);
-        timer = new Timeline(new KeyFrame(Duration.millis(800), actionEvent -> {
-            field.moveDown();
-        }));
+        timer = new Timeline(new KeyFrame(Duration.millis(800), actionEvent -> field.moveDown()));
         timer.setCycleCount(Animation.INDEFINITE);
         field = new Field(consts);
         group = field.getGroup();

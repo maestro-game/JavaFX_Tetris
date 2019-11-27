@@ -3,7 +3,7 @@ package models;
 import javafx.scene.paint.Color;
 
 public class Figure {
-    private Field.Cell[] cells;
+    private Cell[] cells;
     private Color color;
     private int downBorder, leftBorder, rightBorder, upBorder;
 
@@ -13,7 +13,7 @@ public class Figure {
         downBorder = rightBorder;
         rightBorder = 3 - upBorder;
         upBorder = swp;
-        for (Field.Cell cell : cells) {
+        for (Cell cell : cells) {
             int newX = 3 - cell.getY();
             cell.setY(cell.getX());
             cell.setX(newX);
@@ -44,7 +44,7 @@ public class Figure {
         this.color = color;
     }
 
-    public Field.Cell[] getCells() {
+    public Cell[] getCells() {
         return cells;
     }
 
@@ -60,11 +60,11 @@ public class Figure {
 
     // TODO: CUSTOM FIGURES CONSTRUCTOR
     public Figure() {
-        this.cells = new Field.Cell[]{
-                new Field.Cell(-1,-1),
-                new Field.Cell(-1,-1),
-                new Field.Cell(-1,-1),
-                new Field.Cell(-1,-1)};
+        this.cells = new Cell[]{
+                new Cell(-1,-1),
+                new Cell(-1,-1),
+                new Cell(-1,-1),
+                new Cell(-1,-1)};
         this.downBorder = -1;
         this.leftBorder = -1;
         this.rightBorder = -1;
