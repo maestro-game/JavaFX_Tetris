@@ -136,4 +136,8 @@ class Figure {
         }
         this.color = Color.rgb((int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random() * 255));
     }
+
+    public Figure(){
+
+    }
 }
