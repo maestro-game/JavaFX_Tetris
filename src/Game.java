@@ -10,6 +10,7 @@ public class Game {
     private Field field;
     private Group group;
     Timeline timer;
+
     private static ArrayList<Game> gameArray = new ArrayList<>();
 
     public Group getGroup() {
