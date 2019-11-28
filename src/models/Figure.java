@@ -1,8 +1,9 @@
-import javafx.scene.paint.Color;
-import models.Figures;
+package models;
 
-class Figure {
-    private Field.Cell[] cells;
+import javafx.scene.paint.Color;
+
+public class Figure {
+    private Cell[] cells;
     private Color color;
     private int downBorder, leftBorder, rightBorder, upBorder;
 
@@ -16,10 +17,10 @@ class Figure {
         downBorder = rightBorder;
         rightBorder = 3 - upBorder;
         upBorder = swp;
-        for (Field.Cell cell : cells) {
-            int newX = 3 - cell.y;
-            cell.y = cell.x;
-            cell.x = newX;
+        for (Cell cell : cells) {
+            int newX = 3 - cell.getY();
+            cell.setY(cell.getX());
+            cell.setX(newX);
         }
     }
 
@@ -43,18 +44,18 @@ class Figure {
         this.color = color;
     }
 
-    public Field.Cell[] getCells() {
+    public Cell[] getCells() {
         return cells;
     }
 
     public Figure(Figures figure) {
         switch (figure) {
             case O -> {
-                cells = new Field.Cell[]{
-                        new Field.Cell(1, 1),
-                        new Field.Cell(2, 1),
-                        new Field.Cell(1, 2),
-                        new Field.Cell(2, 2)
+                cells = new Cell[]{
+                        new Cell(1, 1),
+                        new Cell(2, 1),
+                        new Cell(1, 2),
+                        new Cell(2, 2)
                 };
                 this.upBorder = 1;
                 this.downBorder = 2;
@@ -62,11 +63,11 @@ class Figure {
                 this.rightBorder = 2;
             }
             case I -> {
-                cells = new Field.Cell[]{
-                        new Field.Cell(1, 0),
-                        new Field.Cell(1, 1),
-                        new Field.Cell(1, 2),
-                        new Field.Cell(1, 3)
+                cells = new Cell[]{
+                        new Cell(1, 0),
+                        new Cell(1, 1),
+                        new Cell(1, 2),
+                        new Cell(1, 3)
                 };
                 this.upBorder = 0;
                 this.downBorder = 3;
@@ -74,11 +75,11 @@ class Figure {
                 this.rightBorder = 1;
             }
             case S -> {
-                cells = new Field.Cell[]{
-                        new Field.Cell(3, 1),
-                        new Field.Cell(2, 1),
-                        new Field.Cell(1, 2),
-                        new Field.Cell(2, 2)
+                cells = new Cell[]{
+                        new Cell(3, 1),
+                        new Cell(2, 1),
+                        new Cell(1, 2),
+                        new Cell(2, 2)
                 };
                 this.upBorder = 1;
                 this.downBorder = 2;
@@ -86,11 +87,11 @@ class Figure {
                 this.rightBorder = 3;
             }
             case Z -> {
-                cells = new Field.Cell[]{
-                        new Field.Cell(1, 1),
-                        new Field.Cell(2, 1),
-                        new Field.Cell(3, 2),
-                        new Field.Cell(2, 2)
+                cells = new Cell[]{
+                        new Cell(1, 1),
+                        new Cell(2, 1),
+                        new Cell(3, 2),
+                        new Cell(2, 2)
                 };
                 this.upBorder = 1;
                 this.downBorder = 2;
@@ -98,11 +99,11 @@ class Figure {
                 this.rightBorder = 3;
             }
             case L -> {
-                cells = new Field.Cell[]{
-                        new Field.Cell(1, 1),
-                        new Field.Cell(1, 0),
-                        new Field.Cell(1, 2),
-                        new Field.Cell(2, 2)
+                cells = new Cell[]{
+                        new Cell(1, 1),
+                        new Cell(1, 0),
+                        new Cell(1, 2),
+                        new Cell(2, 2)
                 };
                 this.upBorder = 0;
                 this.downBorder = 2;
@@ -110,11 +111,11 @@ class Figure {
                 this.rightBorder = 2;
             }
             case J -> {
-                cells = new Field.Cell[]{
-                        new Field.Cell(2, 0),
-                        new Field.Cell(2, 1),
-                        new Field.Cell(1, 2),
-                        new Field.Cell(2, 2)
+                cells = new Cell[]{
+                        new Cell(2, 0),
+                        new Cell(2, 1),
+                        new Cell(1, 2),
+                        new Cell(2, 2)
                 };
                 this.upBorder = 0;
                 this.downBorder = 2;
@@ -122,11 +123,11 @@ class Figure {
                 this.rightBorder = 2;
             }
             case T -> {
-                cells = new Field.Cell[]{
-                        new Field.Cell(1, 1),
-                        new Field.Cell(2, 1),
-                        new Field.Cell(3, 1),
-                        new Field.Cell(2, 2)
+                cells = new Cell[]{
+                        new Cell(1, 1),
+                        new Cell(2, 1),
+                        new Cell(3, 1),
+                        new Cell(2, 2)
                 };
                 this.upBorder = 1;
                 this.downBorder = 2;
@@ -134,6 +135,18 @@ class Figure {
                 this.rightBorder = 3;
             }
         }
-        this.color = Color.rgb((int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random() * 255));
+    }
+
+    public Figure(Cell cells[], Color color) {
+        this.upBorder = 100;
+        this.downBorder = -1;
+        this.leftBorder = 100;
+        this.rightBorder = -1;
+        for(Cell cell : cells){
+            if (cell.getX() < upBorder) upBorder = cell.getX();
+            if (cell.getX() > downBorder) downBorder = cell.getX();
+            if (cell.getY() < leftBorder) leftBorder = cell.getY();
+            if (cell.getY() > rightBorder) rightBorder = cell.getY();
+        }
     }
 }

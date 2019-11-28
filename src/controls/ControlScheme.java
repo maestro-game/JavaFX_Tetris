@@ -1,3 +1,5 @@
+package controls;
+
 import javafx.scene.input.KeyCode;
 
 public class ControlScheme {

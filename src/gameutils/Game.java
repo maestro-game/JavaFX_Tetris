@@ -1,13 +1,18 @@
+package gameutils;
+
+import controls.ControlModule;
+import controls.ControlScheme;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.util.Duration;
+import models.Tetris;
 
 import java.util.ArrayList;
 
 public class Game {
-    private Field field;
+    private Tetris tetris;
     private Group group;
     Timeline timer;
 
@@ -48,21 +53,21 @@ public class Game {
     }
 
     public void moveDown() {
-        field.moveDown();
+        tetris.moveDown();
         timer.stop();
         timer.play();
     }
 
     public void moveLeft() {
-        field.moveLeft();
+        tetris.moveLeft();
     }
 
     public void moveRight() {
-        field.moveRight();
+        tetris.moveRight();
     }
 
     public void rotate() {
-        field.rotate();
+        tetris.rotate();
     }
 
     public void stop() {
@@ -72,13 +77,13 @@ public class Game {
     public Game(GameConstants consts, ControlScheme controlScheme) {
         gameArray.add(this);
         timer = new Timeline(new KeyFrame(Duration.millis(800), actionEvent -> {
-            field.moveDown();
+            tetris.moveDown();
         }));
         timer.setCycleCount(Animation.INDEFINITE);
-        field = new Field(consts);
-        group = field.getGroup();
+        tetris = new Tetris(consts);
+        group = tetris.getGroup();
         ControlModule.addControlScheme(this, controlScheme);
-        field.newFigure();
-        field.newFigure();
+        tetris.newFigure();
+        tetris.newFigure();
     }
 }

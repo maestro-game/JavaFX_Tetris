@@ -1,8 +1,10 @@
+package gameutils;
+
 import javafx.scene.paint.Color;
 
 public class GameConstants {
-    final int FIELD_HEIGHT, FIELD_WIDTH, CELL_SIZE, CELL_DISTANCE, X, Y;
-    final Color FIELD_COLOR;
+    public final int FIELD_HEIGHT, FIELD_WIDTH, CELL_SIZE, CELL_DISTANCE, X, Y;
+    public final Color FIELD_COLOR;
 
     public GameConstants(int X, int Y, int FIELD_HEIGHT, int FIELD_WIDTH, int CELL_SIZE, int CELL_DISTANCE, Color FIELD_COLOR) {
         this.X = X;

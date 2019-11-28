@@ -1,17 +1,10 @@
+package models;
+
+import gameutils.GameConstants;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
-import models.Figures;
 
-public class Field {
-
-    static class Cell {
-        int x, y;
-
-        public Cell(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
+public class Tetris {
 
     private Figure
             O = new Figure(Figures.O),
@@ -23,7 +16,7 @@ public class Field {
             T = new Figure(Figures.T);
 
     private Figure[] figure = {O, I, S, Z, L, T, J};
-    private Rectangle[][] pol;
+    private Rectangle[][] field;
     private Group group;
     private Figure currentFigure;
     private Cell curFigPos;
@@ -34,16 +27,19 @@ public class Field {
         return group;
     }
 
+    public void delFullLines(){
+    }
+
     private boolean rotatable() {
         int newX, newY;
-        if (3 - currentFigure.getDownBorder() + curFigPos.x < 0 || currentFigure.getRightBorder() + curFigPos.y >= consts.FIELD_HEIGHT ||
-                curFigPos.x + 3 - currentFigure.getUpBorder() >= consts.FIELD_WIDTH || curFigPos.y + currentFigure.getLeftBorder() < 0) {
+        if (3 - currentFigure.getDownBorder() + curFigPos.getX() < 0 || currentFigure.getRightBorder() + curFigPos.getY() >= consts.FIELD_HEIGHT ||
+                curFigPos.getX() + 3 - currentFigure.getUpBorder() >= consts.FIELD_WIDTH || curFigPos.getY() + currentFigure.getLeftBorder() < 0) {
             return false;
         }
         for (Cell cell : currentFigure.getCells()) {
-            newX = 3 - cell.y + curFigPos.x;
-            newY = cell.x + curFigPos.y;
-            if (pol[newX][newY].getFill() != consts.FIELD_COLOR) {
+            newX = 3 - cell.getY() + curFigPos.getX();
+            newY = cell.getX() + curFigPos.getY();
+            if (field[newX][newY].getFill() != consts.FIELD_COLOR) {
                 return false;
             }
         }
@@ -63,62 +59,62 @@ public class Field {
 
     private void clearCurFig() {
         for (Cell cell : currentFigure.getCells()) {
-            pol[curFigPos.x + cell.x][curFigPos.y + cell.y].setFill(consts.FIELD_COLOR);
+            field[curFigPos.getX() + cell.getX()][curFigPos.getY() + cell.getY()].setFill(consts.FIELD_COLOR);
         }
     }
 
     private void drawCurFig() {
         for (Cell cell : currentFigure.getCells()) {
-            pol[curFigPos.x + cell.x][curFigPos.y + cell.y].setFill(currentFigure.getColor());
+            field[curFigPos.getX() + cell.getX()][curFigPos.getY() + cell.getY()].setFill(currentFigure.getColor());
         }
     }
 
     public void moveDown() {
-        if (currentFigure.getDownBorder() + curFigPos.y < consts.FIELD_HEIGHT - 1) {
+        if (currentFigure.getDownBorder() + curFigPos.getY() < consts.FIELD_HEIGHT - 1) {
             clearCurFig();
             for (Cell cell : currentFigure.getCells()) {
-                if (pol[cell.x + curFigPos.x][cell.y + curFigPos.y + 1].getFill() != consts.FIELD_COLOR) {
+                if (field[cell.getX() + curFigPos.getX()][cell.getY() + curFigPos.getY() + 1].getFill() != consts.FIELD_COLOR) {
                     drawCurFig();
                     return;
                 }
             }
             //moving
-            curFigPos.y++;
+            curFigPos.setY(curFigPos.getY() + 1);
             drawCurFig();
         } else {
-            //stack figure
             lockFigure();
+            delFullLines();
             newFigure();
             drawCurFig();
         }
     }
 
     public void moveRight() {
-        if (currentFigure.getRightBorder() + curFigPos.x < consts.FIELD_WIDTH - 1) {
+        if (currentFigure.getRightBorder() + curFigPos.getX() < consts.FIELD_WIDTH - 1) {
             clearCurFig();
             for (Cell cell : currentFigure.getCells()) {
-                if (pol[cell.x + curFigPos.x + 1][cell.y + curFigPos.y].getFill() != consts.FIELD_COLOR) {
+                if (field[cell.getX() + curFigPos.getX() + 1][cell.getY() + curFigPos.getY()].getFill() != consts.FIELD_COLOR) {
                     drawCurFig();
                     return;
                 }
             }
             //moving
-            curFigPos.x++;
+            curFigPos.setX(curFigPos.getX() + 1);
             drawCurFig();
         }
     }
 
     public void moveLeft() {
-        if (currentFigure.getLeftBorder() + curFigPos.x > 0) {
+        if (currentFigure.getLeftBorder() + curFigPos.getX() > 0) {
             clearCurFig();
             for (Cell cell : currentFigure.getCells()) {
-                if (pol[cell.x + curFigPos.x - 1][cell.y + curFigPos.y].getFill() != consts.FIELD_COLOR) {
+                if (field[cell.getX() + curFigPos.getX() - 1][cell.getY() + curFigPos.getY()].getFill() != consts.FIELD_COLOR) {
                     drawCurFig();
                     return;
                 }
             }
             //moving
-            curFigPos.x--;
+            curFigPos.setX(curFigPos.getX() - 1);
             drawCurFig();
         }
     }
@@ -131,15 +127,16 @@ public class Field {
         drawCurFig();
     }
 
-    public Field(GameConstants consts) {
+    public Tetris(GameConstants consts) {
         this.consts = consts;
-        pol = new Rectangle[consts.FIELD_WIDTH][consts.FIELD_HEIGHT];
+        field = new Rectangle[consts.FIELD_WIDTH][consts.FIELD_HEIGHT];
         group = new Group();
         for (int i = 0; i < consts.FIELD_WIDTH; i++) {
             for (int j = 0; j < consts.FIELD_HEIGHT; j++) {
-                pol[i][j] = new Rectangle(consts.X + consts.CELL_SIZE * i + consts.CELL_DISTANCE * (i + 2), consts.Y + consts.CELL_SIZE * j + consts.CELL_DISTANCE * (j + 2), consts.CELL_SIZE, consts.CELL_SIZE);
-                pol[i][j].setFill(consts.FIELD_COLOR);
-                group = new Group(group, pol[i][j]);
+                field[i][j] = new Rectangle(consts.X + consts.CELL_SIZE * i + consts.CELL_DISTANCE * (i + 2), consts.Y +
+                        consts.CELL_SIZE * j + consts.CELL_DISTANCE * (j + 2), consts.CELL_SIZE, consts.CELL_SIZE);
+                field[i][j].setFill(consts.FIELD_COLOR);
+                group = new Group(group, field[i][j]);
             }
         }
     }

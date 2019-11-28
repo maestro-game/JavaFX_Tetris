@@ -1,14 +1,11 @@
+import controls.ControlModule;
+import controls.ControlScheme;
+import gameutils.Game;
+import gameutils.GameConstants;
 import javafx.application.Application;
-import javafx.beans.Observable;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.effect.Effect;
-import javafx.scene.effect.MotionBlur;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -25,6 +22,7 @@ public class Main extends Application {
         //stage.setWidth(consts.CELL_SIZE * (consts.FIELD_WIDTH + 5) + consts.CELL_DISTANCE * (consts.FIELD_WIDTH + 8) + 14);
         //stage.setHeight(consts.CELL_SIZE * consts.FIELD_HEIGHT + consts.CELL_DISTANCE * (consts.FIELD_HEIGHT + 3) + 38);
 
+        //ЭТО ВРЕМЕННЫЕ ТРУДНОСТИ!
         GameConstants consts = new GameConstants(0, 0, 20, 10, 15, 3, Color.WHITE);
         GameConstants consts2 = new GameConstants(200, 0, 20, 10, 15, 3, Color.WHITE);
         GameConstants consts3 = new GameConstants(400, 0, 20, 10, 15, 3, Color.WHITE);
