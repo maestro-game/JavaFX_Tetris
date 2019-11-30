@@ -53,8 +53,8 @@ public class Game {
     }
 
     public void moveDown() {
-        tetris.moveDown();
         timer.stop();
+        tetris.moveDown();
         timer.play();
     }
 
@@ -64,6 +64,12 @@ public class Game {
 
     public void moveRight() {
         tetris.moveRight();
+    }
+
+    public void drop(){
+        timer.stop();
+        tetris.drop();
+        timer.play();
     }
 
     public void rotate() {
@@ -83,7 +89,6 @@ public class Game {
         tetris = new Tetris(consts);
         group = tetris.getGroup();
         ControlModule.addControlScheme(this, controlScheme);
-        tetris.newFigure();
-        tetris.newFigure();
+        tetris.initialise();
     }
 }

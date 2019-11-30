@@ -1,11 +1,10 @@
 package controls;
 
-import controls.ControlScheme;
 import gameutils.Game;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import models.Types;
+import models.MovementTypes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,9 +14,9 @@ public class ControlModule {
 
     private static class ControlUnit {
         private Game game;
-        private Types type;
+        private MovementTypes type;
 
-        private ControlUnit(Game game, Types type) {
+        private ControlUnit(Game game, MovementTypes type) {
             this.game = game;
             this.type = type;
         }
@@ -31,7 +30,7 @@ public class ControlModule {
         if (node != null) {
             node.add(controlUnit);
         } else {
-            controlBind.put(keyCode, new ArrayList<>(Arrays.asList(new ControlUnit[]{controlUnit})));
+            controlBind.put(keyCode, new ArrayList<>(Arrays.asList(controlUnit)));
         }
     }
 
@@ -44,15 +43,17 @@ public class ControlModule {
                     case LEFT -> controlUnit.game.moveLeft();
                     case RIGHT -> controlUnit.game.moveRight();
                     case ROTATE -> controlUnit.game.rotate();
+                    case DROP -> controlUnit.game.drop();
                 }
             }
         }
     };
 
     public static void addControlScheme(Game game, ControlScheme controlScheme) {
-        bindControlUnit(controlScheme.down, new ControlUnit(game, Types.DOWN));
-        bindControlUnit(controlScheme.left, new ControlUnit(game, Types.LEFT));
-        bindControlUnit(controlScheme.right, new ControlUnit(game, Types.RIGHT));
-        bindControlUnit(controlScheme.rotate, new ControlUnit(game, Types.ROTATE));
+        bindControlUnit(controlScheme.down, new ControlUnit(game, MovementTypes.DOWN));
+        bindControlUnit(controlScheme.left, new ControlUnit(game, MovementTypes.LEFT));
+        bindControlUnit(controlScheme.right, new ControlUnit(game, MovementTypes.RIGHT));
+        bindControlUnit(controlScheme.rotate, new ControlUnit(game, MovementTypes.ROTATE));
+        bindControlUnit(controlScheme.drop, new ControlUnit(game, MovementTypes.DROP));
     }
 }
